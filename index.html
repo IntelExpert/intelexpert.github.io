@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIS - Cosmic Pulse</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="testing/main-test.css">
 </head>
 <body>
     <header>
@@ -25,14 +25,16 @@
     <main>
         <section id="home" class="hero">
             <canvas id="cosmicCanvas"></canvas>
+            <canvas id="cosmicCanvasLayer2"></canvas>
+            <canvas id="waveCanvas"></canvas>
             <div class="hero-content">
                 <h1 class="pulse">Powering the Future of Space Communication</h1>
                 <p>MIS: Innovative solutions for the next frontier</p>
                 <a href="#contact" class="btn">Get Started</a>
             </div>
         </section>
-
-        <section id="services" class="services">
+    
+        <section id="services" class="services-section">
             <div class="container">
                 <h2>Our Services</h2>
                 <div class="services-grid">
@@ -51,9 +53,58 @@
                 </div>
             </div>
         </section>
+    
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About Us</h2>
+                <p>We are a leading provider of advanced communication solutions for the space industry. Our team of experts is dedicated to pushing the boundaries of technology and innovation to deliver high-quality, reliable, and secure communication systems that connect the world and beyond.</p>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="team-member-1.jpg" alt="Team Member 1">
+                        <h3>Dr. Alice Johnson</h3>
+                        <p>Chief Scientist</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="team-member-2.jpg" alt="Team Member 2">
+                        <h3>Mark Thompson</h3>
+                        <p>Lead Engineer</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="team-member-3.jpg" alt="Team Member 3">
+                        <h3>Samantha Carter</h3>
+                        <p>Project Manager</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <p>If you have any questions or would like to learn more about our services, please get in touch with us.</p>
+                <form action="#" method="post" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
     </main>
+    
 
-    <script src="scripts/canvas.js"></script>
-    <script src="scripts/mouse-follow.js"></script>
+    <script src="testing/canvas-test.js"></script>
+    <script src="testing/mouse-follow-test.js"></script>
 </body>
 </html>
