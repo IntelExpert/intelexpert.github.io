@@ -22,7 +22,6 @@ body, html {
 }
 
 header {
-    /*old background-color: rgba(11, 11, 43, 0.8);*/
     background-color: rgba(0, 0, 0, 0.8);
     padding: 10px 0;
     position: fixed;
@@ -60,7 +59,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: var(--neon-blue);
+    color: var(--white);
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
@@ -71,7 +70,7 @@ nav ul li a:hover {
 }
 
 .hero {
-    height: 100vh;
+    height: 600vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,15 +88,153 @@ nav ul li a:hover {
     z-index: 0;
 }
 
+#cosmicCanvasLayer2 {
+    position: absolute;
+    top: 200vh;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 200vh);
+    z-index: 0;
+}
+
+#waveCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+#spaceStationLayer {
+    position: absolute;
+    top: 300vh;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 200vh);
+    z-index: 3;
+}
+
 .hero-content {
-    position: relative;
+    position: absolute;
+    top: calc(50vh);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
     z-index: 1;
 }
 
+.services-section {
+    position: absolute;
+    top: 125vh;
+    left: 0;
+    width: 100%;
+    background-color:#00000080;
+    z-index: 1;
+    height: 60vh;
+    display: flex; /* Updated to match block layout */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.services-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    padding: 0; /* Maintain comfortable space from screen edges */
+    width: 100%;
+    max-width: none; /* Allow blocks to take up more space */
+    margin: 0; /* Center the container */
+}
+
+.block {
+    flex: 1;
+    margin: 0 auto; /* Increase space between blocks */
+    width: 100%;
+    min-width: 375px;
+    max-width: none; /* Increase max width of blocks */
+    height: 400px; /* Make blocks taller */
+    background-color: rgba(26, 19, 30, 0.29);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(50px); /* Position blocks 50px lower initially */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Smooth transition*/
+}
+
+.block.show {
+    opacity: 1;
+    transform: translateY(0); /* Move blocks to their original position */
+}
+
+/* Add delay for each block */
+.block:nth-child(1) {
+    transition-delay: 0.1s; /* First block floats up immediately */
+}
+
+.block:nth-child(2) {
+    transition-delay: 0.3s; /* Second block floats up a bit later */
+}
+
+.block:nth-child(3) {
+    transition-delay: 0.5s; /* Third block floats up last */
+}
+
+.block:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(149, 0, 255, 0.548);
+    background-color: rgba(34, 20, 41, 0.75); /* Optional darkening on hover */
+}
+
+.block-title {
+    font-size: 20px; /* Increase font size */
+    font-weight: bold;
+    text-align: center;
+    padding: 20px; /* Add more padding */
+    background-color: rgba(34, 20, 41, 0.65);
+}
+
+.block-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px; /* Add more padding to give space for larger icons */
+}
+
+.block-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: containY(0);
+}
+
+.block-content canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Optional: Align blocks better on larger screens */
+@media (min-width: 1400px) {
+    .container {
+        justify-content: space-around; /* Spread out blocks more evenly */
+    }
+}
+
+/* The rest of the styles remain unchanged */
 h1 {
     font-size: 3.5rem;
     color: var(--energy-yellow);
     margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+h2 {
     font-family: 'Orbitron', sans-serif;
 }
 
@@ -116,72 +253,104 @@ h1 {
     background-color: var(--neon-blue);
 }
 
-.block {
-    width: 240px;
-    height: 300px;
-    background-color: rgba(26, 19, 30, 0.29);
-    border-radius: 20px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    color: white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+/* About Section */
+.about-section {
+    position: absolute;
+    top: 185vh;
+    left: 0;
+    width: 100%;
+    background-color: #0b0b2b80;
+    z-index: 1;
+    height: 60vh;
 }
 
-.block:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2); /* Similar to existing hover effect */
-    background-color: rgba(34, 20, 41, 0.75); /* Optional: slightly darken background */
+.about-section .container {
+    padding: 40px 20px;
 }
 
-.block-title {
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    padding: 15px 10px;
-    background-color: rgba(34, 20, 41, 0.65);
-}
-
-.block-content {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.block-content img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.services {
-    padding: 80px 0;
-}
-
-.services-grid {
+.team-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+    margin-top: 20px;
 }
 
-.service-card {
-    background-color: rgba(138, 43, 226, 0.2);
-    border-radius: 15px;
-    padding: 30px;
+.team-member {
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
-}
-
-.service-card h3 {
-    color: var(--neon-blue);
+.team-member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     margin-bottom: 15px;
+}
+
+.team-member h3 {
+    color: var(--neon-blue);
+    margin-bottom: 5px;
+}
+
+.team-member p {
+    color: #ffffff;
+    font-style: italic;
+}
+
+/* Contact Section */
+.contact-section {
+    position: absolute;
+    top: 245vh;
+    left: 0;
+    width: 100%;
+    background-color: #0b0b2b80;
+    z-index: 1;
+    height: 60vh;
+}
+
+.contact-section .container {
+    padding: 40px 20px;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--energy-yellow);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+}
+
+.contact-form button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--electric-purple);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: var(--neon-blue);
 }
 
 @keyframes pulse {
@@ -192,4 +361,8 @@ h1 {
 
 .pulse {
     animation: pulse 2s infinite;
+}
+
+html {
+    scroll-behavior: smooth;
 }
