@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drone Animation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Scene and Renderer Setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Lighting (soft white light for smooth shading)
+    const light = new THREE.AmbientLight(0x404040, 2); // Ambient light to illuminate the scene
+    scene.add(light);
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100); // A point light to highlight the drones
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    // Drone creation function
+    function createDrone() {
+      const droneGroup = new THREE.Group();
+
+      // Main Drone Body (Central Cylinder)
+      const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+      const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+      const droneBody = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      droneGroup.add(droneBody);
+
+      // Drone Arms (4 box arms)
+      const armGeometry = new THREE.BoxGeometry(0.1, 0.1, 2);
+      const armMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+
+      const arm1 = new THREE.Mesh(armGeometry, armMaterial);
+      arm1.position.set(0, 0.2, 1.1);
+      droneGroup.add(arm1);
+
+      const arm2 = arm1.clone();
+      arm2.position.set(0, 0.2, -1.1);
+      droneGroup.add(arm2);
+
+      const arm3 = arm1.clone();
+      arm3.rotation.y = Math.PI / 2;
+      arm3.position.set(1.1, 0.2, 0);
+      droneGroup.add(arm3);
+
+      const arm4 = arm1.clone();
+      arm4.rotation.y = Math.PI / 2;
+      arm4.position.set(-1.1, 0.2, 0);
+      droneGroup.add(arm4);
+
+      // Propellers
+      const propellerGeometry = new THREE.PlaneGeometry(0.6, 0.1);
+      const propellerMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+
+      const propeller1 = new THREE.Mesh(propellerGeometry, propellerMaterial);
+      propeller1.position.set(0, 0.3, 1.6);
+      droneGroup.add(propeller1);
+
+      const propeller2 = propeller1.clone();
+      propeller2.position.set(0, 0.3, -1.6);
+      droneGroup.add(propeller2);
+
+      const propeller3 = propeller1.clone();
+      propeller3.position.set(1.6, 0.3, 0);
+      propeller3.rotation.y = Math.PI / 2;
+      droneGroup.add(propeller3);
+
+      const propeller4 = propeller1.clone();
+      propeller4.position.set(-1.6, 0.3, 0);
+      propeller4.rotation.y = Math.PI / 2;
+      droneGroup.add(propeller4);
+
+      return droneGroup;
+    }
+
+    // Create three drones in a V formation
+    const drone1 = createDrone();
+    drone1.position.set(0, 0, 0);  // Left drone
+    scene.add(drone1);
+   
+    // Camera Position - Above and to the side for a more dynamic angle
+    camera.position.set(0, 2, 10);
+    camera.lookAt(0, 0, 0); // Focus camera towards the center of the formation
+
+    // Responsive resizing
+    window.addEventListener('resize', function () {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+
+    // Variables for oscillation, pitch, and yaw
+    let time = 0;
+
+    // Animation Loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Increase time for oscillation and pitch/yaw adjustments
+      time += 0.02;
+
+      // Oscillate the drones' Y position (up and down) based on a sine wave
+      const oscillationHeight = Math.sin(time*1.8) * .5; // Amplitude of the wave (1.5 units up and down)
+      drone1.position.y = oscillationHeight;
+
+      // Apply pitch (rotation around X-axis) for forward/backward tilting
+      const pitchAngle = Math.sin(time*2) * 0.2; // Slight tilting effect
+      drone1.rotation.x = pitchAngle;
+      
+
+      // Apply yaw (rotation around Y-axis) for left/right turning
+      const yawAngle = Math.cos(time/2) * 0.8; // Slight left/right turn effect
+      drone1.rotation.y = yawAngle;
+
+      // Spin the propellers
+      drone1.children.forEach(child => { if (child.geometry.type === 'PlaneGeometry') child.rotation.z += 0.2 });
+     
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+  </script>
+</body>
+</html>

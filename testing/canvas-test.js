@@ -56,7 +56,7 @@ for (let i = 0; i < starCount2; i++) {
     stars2.push({
         x: Math.random() * canvas2.width,
         y: Math.random() * canvas2.height,
-        radius: Math.random() * 1.0, // Smaller stars for the second layer
+        radius: Math.random() * 1.8, // Smaller stars for the second layer
         alpha: Math.random(),
         direction: Math.random() > 0.5 ? 0.01 : -0.01 // Twinkle effect
     });
@@ -100,8 +100,8 @@ function drawWave(wave, time) {
 // Function to handle parallax scrolling based on user's scroll position
 function handleScroll() {
     const scrollTop = window.scrollY; // Current scroll position
-    const speedFactor1 = .5; // Speed factor for the first layer
-    const speedFactor2 = 0.1; // Speed factor for the second layer (slower)
+    const speedFactor1 = 0.4; // Speed factor for the first layer
+    const speedFactor2 = 0.05; // Speed factor for the second layer (slower)
 
     // Calculate new Y position for each star based on scroll
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear first canvas
@@ -135,8 +135,8 @@ function animateLayers(time) {
     });
 
     stars2.forEach(star => {
-        star.alpha += star.direction;
-        if (star.alpha > 1 || star.alpha < 0) star.direction *= -1;
+        //star.alpha += star.direction;
+        //if (star.alpha > 1 || star.alpha < 0) star.direction *= -1;
     });
 
     // Clear and redraw the waves on their canvas

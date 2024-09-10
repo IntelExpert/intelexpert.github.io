@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<canvas id="satelliteCanvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('satelliteCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const centerX = canvas.width / 2;
+    let centerY = canvas.height / 2;
+    let rotationAngle = 0;
+    let tiltAngle = 0;
+    let verticalDrift = 0;
+    let driftDirection = 1;
+
+    function drawSatellite() {
+        const bodyWidth = 100;
+        const bodyHeight = 50;
+
+        // Apply the vertical drift and tilt effects
+        const driftY = Math.sin(verticalDrift) * 50; // Large vertical oscillation
+        const tilt = Math.sin(tiltAngle) * 0.3;      // Pronounced tilt effect
+
+        // Draw main body (central module)
+        ctx.save();
+        ctx.translate(centerX, centerY + driftY); // Apply vertical drift
+        ctx.rotate(rotationAngle + tilt);         // Apply rotation and tilt
+
+        ctx.beginPath();
+        ctx.rect(-bodyWidth / 2, -bodyHeight / 2, bodyWidth, bodyHeight);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw solar panels connected to the main body
+        drawSolarPanels(bodyWidth, bodyHeight);
+
+        // Draw modules connected to the main body
+        drawModules(bodyWidth, bodyHeight);
+
+        ctx.restore();
+
+        // Update angles for animation
+        rotationAngle += 0.002;   // Slow, steady rotation
+        tiltAngle += 0.03;        // Larger tilting for a tumbling effect
+        verticalDrift += 0.01 * driftDirection; // Up-down drifting
+
+        // Reverse the vertical drift direction at extremes
+        if (verticalDrift > Math.PI * 2) {
+            verticalDrift = 0; // Reset drift cycle
+        }
+    }
+
+    function drawSolarPanels(bodyWidth, bodyHeight) {
+        const panelWidth = 150;
+        const panelHeight = 20;
+        const strutLength = 20;
+
+        // Left panel (with connecting strut)
+        ctx.beginPath();
+        ctx.rect(-bodyWidth / 2 - strutLength - panelWidth, -panelHeight / 2, panelWidth, panelHeight);
+        ctx.fillStyle = '#0077FF';
+        ctx.fill();
+        ctx.stroke();
+
+        // Right panel (with connecting strut)
+        ctx.beginPath();
+        ctx.rect(bodyWidth / 2 + strutLength, -panelHeight / 2, panelWidth, panelHeight);
+        ctx.fillStyle = '#0077FF';
+        ctx.fill();
+        ctx.stroke();
+
+        // Struts connecting the panels to the body
+        ctx.beginPath();
+        ctx.moveTo(-bodyWidth / 2, 0);
+        ctx.lineTo(-bodyWidth / 2 - strutLength, 0);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(bodyWidth / 2, 0);
+        ctx.lineTo(bodyWidth / 2 + strutLength, 0);
+        ctx.stroke();
+    }
+
+    function drawModules(bodyWidth, bodyHeight) {
+        const moduleRadius = 15;
+
+        // Top module
+        ctx.beginPath();
+        ctx.arc(0, -bodyHeight / 2 - moduleRadius, moduleRadius, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.stroke();
+
+        // Bottom module
+        ctx.beginPath();
+        ctx.arc(0, bodyHeight / 2 + moduleRadius, moduleRadius, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.stroke();
+
+        // Left connecting module
+        ctx.beginPath();
+        ctx.arc(-bodyWidth / 2 - 40, 0, moduleRadius, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.stroke();
+
+        // Right connecting module
+        ctx.beginPath();
+        ctx.arc(bodyWidth / 2 + 40, 0, moduleRadius, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.stroke();
+
+        // Struts connecting modules to the body
+        ctx.beginPath();
+        ctx.moveTo(0, -bodyHeight / 2);
+        ctx.lineTo(0, -bodyHeight / 2 - moduleRadius);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, bodyHeight / 2);
+        ctx.lineTo(0, bodyHeight / 2 + moduleRadius);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(-bodyWidth / 2, 0);
+        ctx.lineTo(-bodyWidth / 2 - 40, 0);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(bodyWidth / 2, 0);
+        ctx.lineTo(bodyWidth / 2 + 40, 0);
+        ctx.stroke();
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawSatellite();
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+</body>
+</html>
+
+

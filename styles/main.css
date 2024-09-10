@@ -116,6 +116,46 @@ h1 {
     background-color: var(--neon-blue);
 }
 
+.block {
+    width: 240px;
+    height: 300px;
+    background-color: rgba(26, 19, 30, 0.29);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.block:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2); /* Similar to existing hover effect */
+    background-color: rgba(34, 20, 41, 0.75); /* Optional: slightly darken background */
+}
+
+.block-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 10px;
+    background-color: rgba(34, 20, 41, 0.65);
+}
+
+.block-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.block-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
 .services {
     padding: 80px 0;
 }
