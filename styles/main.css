@@ -153,7 +153,7 @@ nav ul li a:hover {
     flex: 1;
     margin: 0 auto; /* Increase space between blocks */
     width: 100%;
-    min-width: 375px;
+    /* min-width: 375px; */
     max-width: none; /* Increase max width of blocks */
     height: 400px; /* Make blocks taller */
     background-color: rgba(26, 19, 30, 0.29);
