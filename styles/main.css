@@ -350,15 +350,16 @@ h1 {
 
 .about-section {
     position: relative;
-    top: 20vh;
-    left: 2.5%;
-    width: 95%;
+    top: 15vh;
+    left: 7.5%;
+    width: 85%;
     background-color: rgba(16, 12, 19, 0.837);
     z-index: 1;
-    height: 60vh;
-    border-radius: 14px;
+    height: 80vh;
+    border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    border: solid var(--electric-purple), 2px;
 }
 
 .about-section .container {
